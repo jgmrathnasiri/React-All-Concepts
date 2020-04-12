@@ -58,7 +58,9 @@ class Movie extends Component {
     const { data: movies, totalCount } = this.getPaginateData();
 
     if (this.state.movies.length === 0)
-      return <p>There is no movies in the database..!</p>;
+      return (
+        <p className="font-italic">There is no movies in the database..!</p>
+      );
 
     return (
       <div className="row">
@@ -72,7 +74,9 @@ class Movie extends Component {
           ></ListGroup>
         </div>
         <div className="col">
-          <span>Showing {totalCount} movies in the database</span>
+          <span className="font-italic">
+            Showing {totalCount} movies in the database
+          </span>
           <MoviesTable
             pageMovies={movies}
             onLike={this.handleLike}
