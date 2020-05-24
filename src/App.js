@@ -7,6 +7,7 @@ import Customers from "./components/Customers";
 import Rentals from "./components/Rentals";
 import MovieDetails from "./components/MovieDetails";
 import LoginForm from "./components/LoginForm";
+import RegisterForm from "./components/RegisterForm";
 import "./App.css";
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
 
       <main className="container">
         <Switch>
+          <Route path="/register" component={RegisterForm}></Route>
           <Route path="/login" component={LoginForm}></Route>
           <Route path="/movies/:_id" component={MovieDetails}></Route>
           <Route path="/movies" component={Movies}></Route>

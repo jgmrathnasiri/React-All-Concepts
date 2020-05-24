@@ -1,5 +1,5 @@
 import React from "react";
-const Input = ({ name, lable, value, error, onChange }) => {
+const Input = ({ name, lable, value, error, type, onChange }) => {
   return (
     <div className="form-group">
       <span>{lable}</span>
@@ -7,7 +7,7 @@ const Input = ({ name, lable, value, error, onChange }) => {
         value={value}
         onChange={onChange}
         autoFocus
-        type="text"
+        type={type}
         name={name}
         id={name}
         className="form-control"
