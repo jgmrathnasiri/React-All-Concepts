@@ -6,6 +6,7 @@ import { paginate } from "../util/paginate";
 import ListGroup from "./common/listGroup";
 import MoviesTable from "./MoviesTable";
 import _ from "lodash";
+import Search from "./common/search";
 
 class Movie extends Component {
   state = {
@@ -14,6 +15,7 @@ class Movie extends Component {
     pageSize: 4,
     currentPage: 1,
     selectedGroupId: 0,
+    searchText: "",
     sortColunm: { col: "title", order: "asc" },
   };
 
@@ -32,12 +34,20 @@ class Movie extends Component {
       movies,
       selectedGroupId,
       sortColunm,
+      searchText,
     } = this.state;
 
-    const filtered =
-      selectedGroupId !== 0
-        ? movies.filter((m) => m.genre._id === selectedGroupId)
-        : movies;
+    let filtered = [];
+    if (!searchText) {
+      filtered =
+        selectedGroupId !== 0
+          ? movies.filter((m) => m.genre._id === selectedGroupId)
+          : movies;
+    } else {
+      filtered = movies.filter((m) =>
+        m.title.toLowerCase().includes(searchText)
+      );
+    }
 
     const sorted = _.orderBy(filtered, [sortColunm.col], [sortColunm.order]);
 
@@ -74,9 +84,22 @@ class Movie extends Component {
           ></ListGroup>
         </div>
         <div className="col">
+          <div>
+            <button
+              type="button"
+              className="btn btn-primary mb-3"
+              onClick={this.handleNewMovie}
+            >
+              New Movie
+            </button>
+          </div>
+
           <span className="font-italic">
             Showing {totalCount} movies in the database
           </span>
+
+          <Search onSearch={this.handleSearch}></Search>
+
           <MoviesTable
             pageMovies={movies}
             onLike={this.handleLike}
@@ -119,6 +142,14 @@ class Movie extends Component {
 
   handleSort = (sortColunm) => {
     this.setState({ sortColunm });
+  };
+
+  handleNewMovie = (elm) => {
+    this.props.history.push("/movies/new");
+  };
+
+  handleSearch = (searchTxt) => {
+    this.setState({ selectedGroupId: 0, searchText: searchTxt.toLowerCase() });
   };
 }
 
