@@ -98,7 +98,10 @@ class Movie extends Component {
             Showing {totalCount} movies in the database
           </span>
 
-          <Search onSearch={this.handleSearch}></Search>
+          <Search
+            onSearch={this.handleSearch}
+            value={this.state.searchText}
+          ></Search>
 
           <MoviesTable
             pageMovies={movies}
@@ -137,7 +140,7 @@ class Movie extends Component {
   };
 
   handleGroupChange = (groupId) => {
-    this.setState({ selectedGroupId: groupId, currentPage: 1 });
+    this.setState({ selectedGroupId: groupId, currentPage: 1, searchText: "" });
   };
 
   handleSort = (sortColunm) => {
@@ -149,7 +152,11 @@ class Movie extends Component {
   };
 
   handleSearch = (searchTxt) => {
-    this.setState({ selectedGroupId: 0, searchText: searchTxt.toLowerCase() });
+    this.setState({
+      selectedGroupId: 0,
+      searchText: searchTxt.toLowerCase(),
+      currentPage: 0,
+    });
   };
 }
 
